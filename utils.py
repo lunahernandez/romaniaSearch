@@ -1,5 +1,4 @@
-
-#______________________________________________________________________________
+# ______________________________________________________________________________
 # Simple Data Structures: infinity, Dict, Struct
 
 infinity = 1.0e400
@@ -61,7 +60,7 @@ def update(x, **entries):
     return x
 
 
-#______________________________________________________________________________
+# ______________________________________________________________________________
 # Functions on Sequences (mostly inspired by Common Lisp)
 # NOTE: Sequence functions (count_if, find_if, every, some) take function
 # argument first (like reduce, filter, and map).
@@ -152,7 +151,7 @@ def isin(elt, seq):
     return False
 
 
-#______________________________________________________________________________
+# ______________________________________________________________________________
 # Functions on sequences of numbers
 # NOTE: these take the sequence argument first, like min and max,
 # and like standard math notation: \sigma (i = 1..n) fn(i)
@@ -228,7 +227,7 @@ def argmax_random_tie(seq, fn):
     return argmin_random_tie(seq, lambda x: -fn(x))
 
 
-#______________________________________________________________________________
+# ______________________________________________________________________________
 # Statistical and mathematical functions
 
 def histogram(values, mode=0, bin_function=None):
@@ -340,6 +339,7 @@ def normalize(numbers, total=1.0):
     k = total / sum(numbers)
     return [k * n for n in numbers]
 
+
 ## OK, the following are not as widely useful utilities as some of the other
 ## functions here, but they do show up wherever we have 2D grids: Wumpus and
 ## Vacuum worlds, TicTacToe and Checkers, and markov decision Processes.
@@ -379,7 +379,7 @@ def clip(vector, lowest, highest):
     return type(vector)(list(map(min, list(map(max, vector, lowest)), highest)))
 
 
-#______________________________________________________________________________
+# ______________________________________________________________________________
 # Misc Functions
 
 def printf(format, *args):
@@ -490,7 +490,7 @@ def DataFile(name, mode='r'):
     return AIMAFile(['..', 'data', name], mode)
 
 
-#______________________________________________________________________________
+# ______________________________________________________________________________
 # Queues: Stack, FIFOQueue
 
 class Queue:
@@ -544,10 +544,31 @@ class FIFOQueue(Queue):
         return e
 
 
+class PriorityQueue(Queue):
+    def __init__(self, lt=lambda x, y: x < y):
+        self.A = []
+        self.lt = lt
+        self.start = 0
+
+    def append(self, node):
+        for i in range(len(self.A)):
+            if self.lt(node.path_cost, self.A[i].path_cost):
+                self.A.insert(i, node)
+                return
+        self.A.append(node)
+
+    def __len__(self):
+        return len(self.A) - self.start
+
+    def pop(self):
+        e = self.A[self.start]
+        self.start += 1
+        if self.start > 5 and self.start > len(self.A) / 2:
+            self.A = self.A[self.start:]
+            self.start = 0
+        return e
+
 
 ## Fig: The idea is we can define things like Fig[3,10] later.
 ## Alas, it is Fig[3,10] not Fig[3.10], because that would be the same as Fig[3.1]
 Fig = {}
-
-
-

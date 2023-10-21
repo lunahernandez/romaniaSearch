@@ -130,6 +130,9 @@ def depth_first_graph_search(problem):
     return graph_search(problem, Stack())
 
 
+def uniform_cost_graph_search(problem):
+    return graph_search(problem, PriorityQueue())
+
 
 # _____________________________________________________________________________
 # The remainder of this file implements examples for the search algorithms.
