@@ -98,13 +98,24 @@ def graph_search(problem, fringe):
     The argument fringe should be an empty queue.
     If two paths reach a state, only use the best one. [Fig. 3.18]"""
     closed = {}
+    generated_nodes = []
+    visited_nodes = []
     fringe.append(Node(problem.initial))
     while fringe:
         node = fringe.pop()
+        if str(node) not in visited_nodes:
+            visited_nodes.append(str(node))
         if problem.goal_test(node.state):
+            print("Number of generated nodes: ", len(generated_nodes))
+            print("Number of visited nodes: ", len(visited_nodes))
             return node
         if node.state not in closed:
             closed[node.state] = True
+            for i in range(len(node.expand(problem))):
+                if str(node.expand(problem)[i]) not in generated_nodes:
+                    generated_nodes.append(str(node.expand(problem)[i]))
+            print("The node " + str(node) + " expands " + str(len(node.expand(problem))) +
+                  " nodes: " + str(node.expand(problem)))
             fringe.extend(node.expand(problem))
     return None
 
