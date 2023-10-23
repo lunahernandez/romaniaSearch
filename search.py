@@ -106,6 +106,7 @@ def graph_search(problem, fringe):
         if str(node) not in visited_nodes:
             visited_nodes.append(str(node))
         if problem.goal_test(node.state):
+            print("Total cost: ", node.path_cost)
             print("Number of generated nodes: ", len(generated_nodes))
             print("Number of visited nodes: ", len(visited_nodes))
             return node
@@ -130,7 +131,7 @@ def depth_first_graph_search(problem):
     return graph_search(problem, Stack())
 
 
-def uniform_cost_graph_search(problem):
+def branch_and_bound_graph_search(problem):
     return graph_search(problem, PriorityQueue())
 
 
