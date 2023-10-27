@@ -11,6 +11,9 @@ print("\nStarting depth search")
 print("Depth search: ", search.depth_first_graph_search(ab).path())
 print("\nStarting branch and bound search")
 print("Branch and Bound search: ", search.branch_and_bound_graph_search(ab).path())
+print("\nStarting branch and bound with subestimation search")
+print("Branch and Bound with subestimation search: ",
+      search.branch_and_bound_with_subestimation_graph_search(ab).path())
 
 # Result:
 # [<Node B>, <Node P>, <Node R>, <Node S>, <Node A>] : 101 + 97 + 80 + 140 = 418

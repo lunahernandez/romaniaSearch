@@ -1,5 +1,6 @@
 # ______________________________________________________________________________
 # Simple Data Structures: infinity, Dict, Struct
+import math
 
 infinity = 1.0e400
 
@@ -568,6 +569,30 @@ class PriorityQueue(Queue):
             self.start = 0
         return e
 
+class PriorityQueueWithSubestimation(Queue):
+    def __init__(self, problem, lt=lambda x, y: x < y):
+        self.A = []
+        self.lt = lt
+        self.start = 0
+        self.problem = problem
+
+    def append(self, node):
+        for i in range(len(self.A)):
+            if self.lt(node.path_cost + self.problem.h(node), self.A[i].path_cost + self.problem.h(self.A[i])):
+                self.A.insert(i, node)
+                return
+        self.A.append(node)
+
+    def __len__(self):
+        return len(self.A) - self.start
+
+    def pop(self):
+        e = self.A[self.start]
+        self.start += 1
+        if self.start > 5 and self.start > len(self.A) / 2:
+            self.A = self.A[self.start:]
+            self.start = 0
+        return e
 
 ## Fig: The idea is we can define things like Fig[3,10] later.
 ## Alas, it is Fig[3,10] not Fig[3.10], because that would be the same as Fig[3.1]

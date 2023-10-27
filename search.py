@@ -4,7 +4,6 @@ The way to use this code is to subclass Problem to create a class of problems,
 then create problem instances and solve them with calls to the various search
 functions."""
 
-
 from utils import *
 import random
 import sys
@@ -133,6 +132,10 @@ def depth_first_graph_search(problem):
 
 def branch_and_bound_graph_search(problem):
     return graph_search(problem, PriorityQueue())
+
+
+def branch_and_bound_with_subestimation_graph_search(problem):
+    return graph_search(problem, PriorityQueueWithSubestimation(problem))
 
 
 # _____________________________________________________________________________
