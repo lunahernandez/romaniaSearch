@@ -569,6 +569,7 @@ class PriorityQueue(Queue):
             self.start = 0
         return e
 
+
 class PriorityQueueWithSubestimation(Queue):
     def __init__(self, problem, lt=lambda x, y: x < y):
         self.A = []
@@ -593,6 +594,7 @@ class PriorityQueueWithSubestimation(Queue):
             self.A = self.A[self.start:]
             self.start = 0
         return e
+
 
 ## Fig: The idea is we can define things like Fig[3,10] later.
 ## Alas, it is Fig[3,10] not Fig[3.10], because that would be the same as Fig[3.1]

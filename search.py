@@ -131,10 +131,12 @@ def depth_first_graph_search(problem):
 
 
 def branch_and_bound_graph_search(problem):
+    """Search using a priority queue (PriorityQueue) based on path cost."""
     return graph_search(problem, PriorityQueue())
 
 
 def branch_and_bound_with_subestimation_graph_search(problem):
+    """Search using a priority queue (PriorityQueueWithSubestimation) based on path cost and subestimation heuristic."""
     return graph_search(problem, PriorityQueueWithSubestimation(problem))
 
 
