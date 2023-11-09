@@ -97,26 +97,32 @@ def graph_search(problem, fringe):
     The argument fringe should be an empty queue.
     If two paths reach a state, only use the best one. [Fig. 3.18]"""
     closed = {}
-    generated_nodes = []
-    visited_nodes = []
+    generated_nodes_with_repetition = 1
+    visited_nodes_with_repetition = 0
+    generated_nodes_without_repetition = []
+    visited_nodes_without_repetition = []
     fringe.append(Node(problem.initial))
     while fringe:
         node = fringe.pop()
-        if str(node) not in visited_nodes:
-            visited_nodes.append(str(node))
+        visited_nodes_with_repetition += 1
+        if str(node) not in visited_nodes_without_repetition:
+            visited_nodes_without_repetition.append(str(node))
         if problem.goal_test(node.state):
             print("Total cost: ", node.path_cost)
-            print("Number of generated nodes: ", len(generated_nodes))
-            print("Number of visited nodes: ", len(visited_nodes))
+            print("Number of generated nodes with repetition: ", generated_nodes_with_repetition)
+            print("Number of generated nodes without repetition: ", len(generated_nodes_without_repetition))
+            print("Number of visited nodes with repetition: ", visited_nodes_with_repetition)
+            print("Number of visited nodes without repetition: ", len(visited_nodes_without_repetition))
             return node
         if node.state not in closed:
             closed[node.state] = True
             for i in range(len(node.expand(problem))):
-                if str(node.expand(problem)[i]) not in generated_nodes:
-                    generated_nodes.append(str(node.expand(problem)[i]))
+                if str(node.expand(problem)[i]) not in generated_nodes_without_repetition:
+                    generated_nodes_without_repetition.append(str(node.expand(problem)[i]))
             print("The node " + str(node) + " expands " + str(len(node.expand(problem))) +
                   " nodes: " + str(node.expand(problem)))
             fringe.extend(node.expand(problem))
+            generated_nodes_with_repetition += len(node.expand(problem))
     return None
 
 
